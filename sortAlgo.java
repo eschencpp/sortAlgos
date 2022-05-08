@@ -8,6 +8,9 @@ public class sortAlgo {
      * Merge Sort O(nlogn)
      * @param   
      */
+    static int pivotposition;
+
+     
     public static int[] mergeSort(int[] arr,int low, int high){
         int mid = 0;
         if(low < high){
@@ -58,16 +61,46 @@ public class sortAlgo {
      * Iterative Quick Sort
      * @param   
      */
-    public static double iterQuickSort(){
+    public static int[] QuickSort(int[] arr,int p, int q){
+        if(p < q){
+            iterQuickSortPart(arr, p,q, pivotposition);
+            QuickSort(arr, p,iterQuickSortPart(arr, p,q, pivotposition) - 1 );
+            QuickSort(arr,iterQuickSortPart(arr, p,q, pivotposition) + 1,q);
+        }
+        return arr;
+    }  
 
+
+    /**
+     * Iterative Quick Sort Partition
+     * @param   
+     */
+    public static int iterQuickSortPart(int[] arr,int low, int high, int pivot){
+        int v = arr[low];
+        int j = low;
+        int temp = 0;
+        for(int i = low + 1;i < high;i++){
+            if(arr[i] < v){
+                j++;
+                temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        pivot = j;
+        
+        temp = arr[low];
+        arr[low] = arr[pivot];
+        arr[pivot] = temp;
+        return pivot;
     }
 
     /**
-     * Recursive Quick Sort
+     * Recursive Quick Sort Partition
      * @param   
      */
     public static double recurQuickSort(){
-
+        return 0;
     }
 
     /**
@@ -75,7 +108,7 @@ public class sortAlgo {
      * @param   
      */
     public static double mmSort(){
-
+        return 0;
     }
 
     public static void printArr(int[] arr){
@@ -86,8 +119,10 @@ public class sortAlgo {
     }
     public static void main(String[] args) {
         int[] testArr = {3, 4, 5,23,123,64,6};
+        int[] testArr2 = {13,27,5,26,547,43,23,46};
         //System.out.println("From the main method:");
-        printArr(mergeSort(testArr, 0, 6));
+        //printArr(mergeSort(testArr, 0, 6));
+        printArr(QuickSort(testArr, 0, testArr.length));
     }
 
     
