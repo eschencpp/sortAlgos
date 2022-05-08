@@ -8,7 +8,7 @@ public class sortAlgo {
      * Merge Sort O(nlogn)
      * @param   
      */
-    static int pivotposition;
+    static int pivotposition = 0;
 
      
     public static int[] mergeSort(int[] arr,int low, int high){
@@ -58,24 +58,24 @@ public class sortAlgo {
     }
 
     /**
-     * Iterative Quick Sort
+     * Recursive Quick Sort
      * @param   
      */
-    public static int[] QuickSort(int[] arr,int p, int q){
+    public static int[] RecurQuickSort(int[] arr,int p, int q){
         if(p < q){
-            iterQuickSortPart(arr, p,q, pivotposition);
-            QuickSort(arr, p,iterQuickSortPart(arr, p,q, pivotposition) - 1 );
-            QuickSort(arr,iterQuickSortPart(arr, p,q, pivotposition) + 1,q);
+            Partition(arr, p,q, pivotposition);
+            RecurQuickSort(arr, p,Partition(arr, p,q, pivotposition) - 1 );
+            RecurQuickSort(arr,Partition(arr, p,q, pivotposition) + 1,q);
         }
         return arr;
     }  
 
 
     /**
-     * Iterative Quick Sort Partition
+     * Quick Sort Partition
      * @param   
      */
-    public static int iterQuickSortPart(int[] arr,int low, int high, int pivot){
+    public static int Partition(int[] arr,int low, int high, int pivot){
         int v = arr[low];
         int j = low;
         int temp = 0;
@@ -96,11 +96,31 @@ public class sortAlgo {
     }
 
     /**
-     * Recursive Quick Sort Partition
-     * @param   
+     * Iterative Quick Sort
+     * @param  n  number of elements
+     * @param  k key
+     * @return the smallest number
      */
-    public static double recurQuickSort(){
-        return 0;
+    public static int IterQuickSort(int[] arr, int n, int k){
+        int m = 0;
+        int j = n;
+        int pivot = arr.length - 1;
+        for(int i = 0; i <= n ; i++ ){
+            Partition(arr, m, j, pivot);
+            if(k == Partition(arr, m, j, pivot)){
+                return arr[k];
+            }
+
+            if(k < Partition(arr, m, j, pivot)){
+                j = Partition(arr, m, j, pivot) - 1;
+            } else{
+                m = Partition(arr, m, j, pivot) + 1;
+                //k = k - pivot;
+            }
+            
+        }
+
+        return arr[k];
     }
 
     /**
@@ -118,11 +138,13 @@ public class sortAlgo {
         }
     }
     public static void main(String[] args) {
-        int[] testArr = {3, 4, 5,23,123,64,6};
-        int[] testArr2 = {13,27,5,26,547,43,23,46};
+        int[] testArr = {16, 4, 5,23};
+        int[] testArr2 = {13,27,5,26,547,43,2,46,23};
         //System.out.println("From the main method:");
         //printArr(mergeSort(testArr, 0, 6));
-        printArr(QuickSort(testArr, 0, testArr.length));
+        //printArr(RecurQuickSort(testArr, 0, testArr.length));
+        for(int i = 0; i < testArr2.length; i++)
+        System.out.println("The lowest number in iterQuick is: "+IterQuickSort(testArr2, testArr2.length, i));
     }
 
     
