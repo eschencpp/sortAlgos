@@ -192,16 +192,13 @@ public class sortAlgo {
         //Taking user input for array size and kth value
         Scanner sc = new Scanner(System.in);
         System.out.printf("Please enter the number of elements in the array. (10,50,100,500,1000): ");
-        int arrSize = sc.nextInt();
-        System.out.printf("Enter the kth element(1 being the least): ");
-        int k = sc.nextInt();
-        sc.close();
+        int arrSize = sc.nextInt();        
 
         int iter = 100; //Set number iterations
         int[] arr = new int[arrSize];
         arr = fillArr(arrSize, arr); //Randomize input array
-        System.out.println("The numbers in the array are: ");
-        printArr(arr);
+        //System.out.println("The numbers in the array are: ");
+        //printArr(arr);
 
         
         long mergeStart;
@@ -218,44 +215,52 @@ public class sortAlgo {
         long totalTimeRecur =0;
         long totalTimeMM = 0;
 
-        if(k >= 1 && arrSize > 0){
-            for(int i = 0; i < iter; i++){
-                mergeStart = System.nanoTime();
-                mergeSort(arr, 0, arrSize - 1, k - 1);
-                mergeEnd = System.nanoTime();
+        String continueSearch = "Y";
+        while(continueSearch.equals("Y") || continueSearch.equals("y")){
+            System.out.println("The numbers in the array are: ");
+            printArr(arr);
+            System.out.printf("\nEnter the kth element(1 being the least): ");
+            int k = sc.nextInt();
+            if(k >= 1 && arrSize > 0){
+                for(int i = 0; i < iter; i++){
+                    mergeStart = System.nanoTime();
+                    mergeSort(arr, 0, arrSize - 1, k - 1);
+                    mergeEnd = System.nanoTime();
 
-                iterStart = System.nanoTime();
-                IterQuickSort(arr, arrSize, k - 1);
-                iterEnd = System.nanoTime();
+                    iterStart = System.nanoTime();
+                    IterQuickSort(arr, arrSize, k - 1);
+                    iterEnd = System.nanoTime();
 
-                recurStart = System.nanoTime();
-                RecurQuickSort(arr, 0, arrSize - 1, k - 1);
-                recurEnd = System.nanoTime();
+                    recurStart = System.nanoTime();
+                    RecurQuickSort(arr, 0, arrSize - 1, k - 1);
+                    recurEnd = System.nanoTime();
 
-                mmStart = System.nanoTime();
-                mmSort(arr,0, arrSize - 1, k);
-                mmEnd = System.nanoTime();
+                    mmStart = System.nanoTime();
+                    mmSort(arr,0, arrSize - 1, k);
+                    mmEnd = System.nanoTime();
 
-                totalTimeMerge += (mergeEnd - mergeStart);
-                totalTimeRecur += (recurEnd - recurStart);
-                totalTimeIter += (iterEnd - iterStart);
-                totalTimeMM += (mmEnd - mmStart);
+                    totalTimeMerge += (mergeEnd - mergeStart);
+                    totalTimeRecur += (recurEnd - recurStart);
+                    totalTimeIter += (iterEnd - iterStart);
+                    totalTimeMM += (mmEnd - mmStart);
+                }
+            } else{
+                System.out.println("Kth value and array size must be set to 1 or higher.");
+                return;
             }
-        } else{
-            System.out.println("Kth value and array size must be set to 1 or higher.");
-            return;
+
+            System.out.printf("\nThe average time to find the kth smallest element using merge sort is: %f nanoseconds" , (float)(totalTimeMerge / iter));
+            System.out.printf("\nThe average time to find the kth smallest element using iterative quick sort is: %f nanoseconds" , (float)(totalTimeIter/ iter));
+            System.out.printf("\nThe average time to find the kth smallest element using recursive quick sort is: %f nanoseconds" , (float)(totalTimeRecur/ iter));
+            System.out.printf("\nThe average time to find the kth smallest element using Median of Medians is: %f nanoseconds" , (float)(totalTimeMM/ iter));
+
+            System.out.println("\n\nKth element for merge sort: "+mergeSort(arr, 0, arrSize - 1, k-1));
+            System.out.println("Kth element for recursive quick sort: "+RecurQuickSort(arr, 0, arrSize - 1, k-1));
+            System.out.println("Kth element for iterative quick sort: "+IterQuickSort(arr, arrSize, k-1));
+            System.out.println("Kth element for Median of Medians: "+mmSort(arr,0, arrSize - 1, k));
+
+            System.out.println("Would you like to search for another k value? (Y to continue).");
+            continueSearch = sc.next();
         }
-
-        System.out.printf("\nThe average time to find the kth smallest element using merge sort is: %f nanoseconds" , (float)(totalTimeMerge / iter));
-        System.out.printf("\nThe average time to find the kth smallest element using iterative quick sort is: %f nanoseconds" , (float)(totalTimeIter/ iter));
-        System.out.printf("\nThe average time to find the kth smallest element using recursive quick sort is: %f nanoseconds" , (float)(totalTimeRecur/ iter));
-        System.out.printf("\nThe average time to find the kth smallest element using Median of Medians is: %f nanoseconds" , (float)(totalTimeMM/ iter));
-
-        System.out.println("\n\nKth element for merge sort: "+mergeSort(arr, 0, arrSize - 1, k-1));
-        System.out.println("Kth element for recursive quick sort: "+RecurQuickSort(arr, 0, arrSize - 1, k-1));
-        System.out.println("Kth element for iterative quick sort: "+IterQuickSort(arr, arrSize, k-1));
-        System.out.println("Kth element for Median of Medians: "+mmSort(arr,0, arrSize - 1, k));
-
-
     }
 }
