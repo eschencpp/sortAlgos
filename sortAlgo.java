@@ -142,10 +142,12 @@ public class sortAlgo {
             int i;
 
             int[] median = new int[(n + 4)/r];
+            //For subarrays 6 elements
             for(i = 0; i < n/5; i++){
                 median[i] = getMedian(arr, low + (i*r), low + (i*r) + 5);
             }
 
+            //For subarrays with less than 5 elements
             if(i * 5 < n){
                 median[i] = getMedian(arr, low + (i*r), low + (i*5) + (n%5));
                 i++;
@@ -165,8 +167,6 @@ public class sortAlgo {
             }
         }
 
-
-
         return arr[k];
     }
 
@@ -175,7 +175,7 @@ public class sortAlgo {
         Random rand = new Random();
         int randInt = 0;
         for(int i = 0; i < n; i++){
-                randInt = -100 + rand.nextInt(200); // Random Int from -100-100
+                randInt = -2500 + rand.nextInt(5000); // Random Int from -100-100
                 arr[i] = randInt;
         }
         return arr;
@@ -194,7 +194,7 @@ public class sortAlgo {
         System.out.printf("Please enter the number of elements in the array. (10,50,100,500,1000): ");
         int arrSize = sc.nextInt();        
 
-        int iter = 100; //Set number iterations
+        int iter = 1000; //Set number iterations
         int[] arr = new int[arrSize];
         arr = fillArr(arrSize, arr); //Randomize input array
         //System.out.println("The numbers in the array are: ");
