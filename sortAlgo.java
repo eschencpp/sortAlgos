@@ -2,7 +2,6 @@
  * Eric Chen
  * CS3310 Project 2
  */
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -10,11 +9,12 @@ import java.util.Scanner;
 public class sortAlgo {
 
     /**
-     * Merge Sort O(nlogn)
-     * @param   
+     * Merge Sort O(nlogn) (kth 1)
+     * @param   arr   input array
+     * @param   low   lowest index
+     * @param   high  highest index
+     * @param   k     kth value to search for
      */
-    //static int pivotposition = 0;
-
      
     public static int mergeSort(int[] arr,int low, int high, int k){
         int mid = 0;
@@ -64,8 +64,9 @@ public class sortAlgo {
 
     /**
      * Iterative Quick Sort
+     * @param  arr input array
      * @param  n  number of elements
-     * @param  k key
+     * @param  k kth element
      * @return the kth smallest number
      */
     public static int IterQuickSort(int[] arr, int n, int k){
@@ -92,7 +93,10 @@ public class sortAlgo {
 
     /**
      * Recursive Quick Sort
-     * @param   
+     * @param arr  input array
+     * @param p left index
+     * @param q right index
+     * @param pivotposition pivot point  
      */
     public static int RecurQuickSort(int[] arr,int p, int q, int pivotposition){
         if(p < q){
@@ -106,7 +110,10 @@ public class sortAlgo {
 
     /**
      * Quick Sort Partition
-     * @param   
+     * @param arr  input array
+     * @param low left index
+     * @param high right index
+     * @param pivot pivot point
      */
     public static int Partition(int[] arr,int low, int high, int pivot){
         int v = arr[low];
@@ -170,19 +177,18 @@ public class sortAlgo {
         return arr[k];
     }
 
-    //Method to randomly generate test matrices. Range of numbers from -100 to 100.
+    //Method to randomly generate test matrices. Range of numbers from -2500 to 2500
     public static int[] fillArr(int n, int[] arr){
         Random rand = new Random();
         int randInt = 0;
         for(int i = 0; i < n; i++){
-                randInt = -2500 + rand.nextInt(5000); // Random Int from -100-100
+                randInt = -2500 + rand.nextInt(5000); // Random Int from -2500 to 2500
                 arr[i] = randInt;
         }
         return arr;
     }
 
     public static void printArr(int[] arr){
-        //System.out.println("The sorted array is: ");
         for(int i = 0; i<arr.length; i++){
             System.out.printf("%d  ",arr[i]);
         }
@@ -197,10 +203,7 @@ public class sortAlgo {
         int iter = 1000; //Set number iterations
         int[] arr = new int[arrSize];
         arr = fillArr(arrSize, arr); //Randomize input array
-        //System.out.println("The numbers in the array are: ");
-        //printArr(arr);
-
-        
+               
         long mergeStart;
         long mergeEnd;
         long iterStart;
@@ -214,8 +217,9 @@ public class sortAlgo {
         long totalTimeIter = 0;
         long totalTimeRecur =0;
         long totalTimeMM = 0;
-
+        
         String continueSearch = "Y";
+        //While loop to allow for multiple k values to be tested with the same array.
         while(continueSearch.equals("Y") || continueSearch.equals("y")){
             System.out.println("The numbers in the array are: ");
             printArr(arr);
